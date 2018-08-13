@@ -45,8 +45,7 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
     private AnimatedSprite currentHostileSprite;
     private AnimatedSprite explosionSprite;
     private AnimatedSpriteMainBird mainBirdSprite;
-//    private Bitmap mainBirdBitmap;
-private Bitmap wavesBitmap;
+    private Bitmap wavesBitmap;
     private Bitmap skyBitmap;
     private Paint paint01;
     private Paint paint02;
