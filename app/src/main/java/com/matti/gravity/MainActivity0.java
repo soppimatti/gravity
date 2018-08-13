@@ -12,8 +12,7 @@ import android.util.Log;
  */
 public class MainActivity0 extends Activity
 {
-    private static final String CLASS_NAME = "MainActivity";
-    private GravityView gravityView;
+    private static final String CLASS_NAME = "MainActivity0";
     private Bundle savedInstanceState;
 
 
@@ -25,18 +24,11 @@ public class MainActivity0 extends Activity
     {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main);
+        setContentView(R.layout.main0);
 
         this.savedInstanceState = savedInstanceState;
 
-        this.gravityView = (GravityView) this.findViewById(R.id.gravity_view);
-        this.gravityView.setParentActivity(this);
-
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
         SharedPreferences sp = this.getPreferences(Context.MODE_PRIVATE);
-        this.gravityView.setSharedPrefs(sp);
 
         Log.i(CLASS_NAME, "onCreate orientation " + getResources().getConfiguration().orientation + ", si " + savedInstanceState);
     }
@@ -50,8 +42,6 @@ public class MainActivity0 extends Activity
         super.onResume();
 
         Log.i(CLASS_NAME, "onResume");
-
-        this.gravityView.restoreState(this.savedInstanceState);
     }
 
     /**
@@ -99,7 +89,5 @@ public class MainActivity0 extends Activity
         super.onSaveInstanceState(outState);
 
         Log.d(CLASS_NAME, "onSaveInstanceState");
-
-        this.savedInstanceState = this.gravityView.saveState(outState);
     }
 }
