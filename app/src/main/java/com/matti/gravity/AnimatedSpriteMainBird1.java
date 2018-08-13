@@ -10,20 +10,6 @@ import android.view.MotionEvent;
  */
 public class AnimatedSpriteMainBird1 extends AnimatedSpriteMainBird
 {
-    protected int[] frameAnimations;
-    protected int frameNo = 0;
-    private String CLASS_NAME = "AnimatedSpriteMainBird1";
-    public boolean loopAnim = true;
-    public boolean sequenceDone = false;
-    public int speed = 0;
-    public int MIN_SPEED = -20;
-    public int MAX_SPEED = 20;
-    public boolean crashedTop = false;
-    public boolean crashedBottom = false;
-    public int screenTop = 0;
-    public int screenBottom = 0;
-    public boolean dirRight = true;
-
     /**
      *
      */
@@ -37,7 +23,7 @@ public class AnimatedSpriteMainBird1 extends AnimatedSpriteMainBird
      */
     public void onUpdate(long tickCounter, int touchAction)
     {
-//        Log.d(CLASS_NAME, "onUpdate tickCounter " + tickCounter + ", ta " + touchAction);
+//        Log.d(CLASS_NAME, "onUpdate tickCounter " + tickCounter + ", ta " + touchAction + ", px " + this.posX + ", py " + this.posY + " s " + this.speed + ", st " + this.screenTop + ", sb " + this.screenBottom);
 
         this.crashedTop = false;
         this.crashedBottom = false;
@@ -73,25 +59,22 @@ public class AnimatedSpriteMainBird1 extends AnimatedSpriteMainBird
 
         if ((this.posY + this.speed + this.height / 2.0) > this.screenBottom)
         {
-//                Log.d(CLASS_NAME, "onUpdate D");
+//            Log.d(CLASS_NAME, "onUpdate 1 y " + this.posY + ", s " + this.speed + ", h " + this.height + ", st " + this.screenTop + ", xxx1 " + (this.posY + this.speed - this.height / 2.0f) + ", xxx2 " + (this.posY + this.speed - this.height) + ", xxx3 " + (this.posY + this.speed - this.height/4.0f));
             this.speed = 0;
             this.crashedBottom = true;
             this.posY = (int) (this.screenBottom - this.height / 2.0f);
         }
         else if ((this.posY + this.speed) < this.screenTop)
         {
-            Log.d(CLASS_NAME, "onUpdate U y " + this.posY + ", s " + this.speed + ", h " + this.height + ", st " + this.screenTop + ", xxx1 " + (this.posY + this.speed - this.height / 2.0f) + ", xxx2 " + (this.posY + this.speed - this.height) + ", xxx3 " + (this.posY + this.speed - this.height/4.0f));
+//            Log.d(CLASS_NAME, "onUpdate 2 y " + this.posY + ", s " + this.speed + ", h " + this.height + ", st " + this.screenTop + ", xxx1 " + (this.posY + this.speed - this.height / 2.0f) + ", xxx2 " + (this.posY + this.speed - this.height) + ", xxx3 " + (this.posY + this.speed - this.height/4.0f));
             this.speed = 0;
             this.crashedTop = true;
             this.posY = this.screenTop;
-//            Log.d(CLASS_NAME, "onUpdate U y " + this.posY + ", s " + this.speed + ", h " + this.height + ", st " + this.screenTop);
         }
         else
         {
-//            this.posY += this.speed;
+            this.posY += this.speed;
         }
-
-//        Log.d(CLASS_NAME, "onUpdate U y " + this.posY + ", s " + this.speed + ", h " + this.height + ", st " + this.screenTop);
 
         if (this.speed >= 0)
         {
