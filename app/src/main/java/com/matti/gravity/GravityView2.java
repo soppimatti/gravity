@@ -131,7 +131,7 @@ public class GravityView2 extends SurfaceView implements SurfaceHolder.Callback,
         matrix.preScale(-1.0f, 1.0f);
         this.flippedMain = Bitmap.createBitmap(this.mainBirdBitmaps[0], 0, 0, this.mainBirdBitmaps[0].getWidth(), this.mainBirdBitmaps[0].getHeight(), matrix, true);
 
-        this.mainBirdSprite = new AnimatedSpriteMainBird(new int[]{0, 1}, 80, 80, 0, largementFactor, this.screenDensity);
+        this.mainBirdSprite = new AnimatedSpriteMainBird2(new int[]{0, 1}, 80, 80, 0, largementFactor, this.screenDensity);
         this.mainBirdSprite.setBitmap(this.bitmaps[2]);
 
         this.hostileSprites = new AnimatedSprite[6];
@@ -164,7 +164,6 @@ public class GravityView2 extends SurfaceView implements SurfaceHolder.Callback,
         this.explosionSprite.ticksToAnim = 3;
         this.explosionSprite.setLoopAnim(false);
 
-//        this.fireSprite = new AnimatedSprite(new int[]{0}, 80, 60, 0, largementFactor, this.screenDensity);
         this.fireSprite = null;
         this.currentFireSprites = new ArrayList<AnimatedSprite>();
 
