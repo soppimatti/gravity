@@ -10,9 +10,9 @@ import android.util.Log;
 /**
  *
  */
-public class MainActivity extends Activity
+public class MainActivity1 extends Activity
 {
-    private static final String CLASS_NAME = "MainActivity";
+    private static final String CLASS_NAME = "MainActivity1";
     private GravityView gravityView;
     private Bundle savedInstanceState;
 
@@ -25,7 +25,7 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.main);
+        setContentView(R.layout.main1);
 
         this.savedInstanceState = savedInstanceState;
 
