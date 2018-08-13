@@ -2,19 +2,22 @@ package com.matti.gravity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 /**
  *
  */
-public class MainActivity0 extends Activity
+public class MainActivity0 extends Activity implements View.OnClickListener
 {
     private static final String CLASS_NAME = "MainActivity0";
     private Bundle savedInstanceState;
-
+    private Button level1Button = null;
+    private Button level2Button = null;
 
     /**
      *
@@ -29,6 +32,12 @@ public class MainActivity0 extends Activity
         this.savedInstanceState = savedInstanceState;
 
         SharedPreferences sp = this.getPreferences(Context.MODE_PRIVATE);
+
+        this.level1Button = (Button) this.findViewById(R.id.level1Button);
+        this.level2Button = (Button) this.findViewById(R.id.level2Button);
+
+        this.level1Button.setOnClickListener(this);
+        this.level2Button.setOnClickListener(this);
 
         Log.i(CLASS_NAME, "onCreate orientation " + getResources().getConfiguration().orientation + ", si " + savedInstanceState);
     }
@@ -89,5 +98,52 @@ public class MainActivity0 extends Activity
         super.onSaveInstanceState(outState);
 
         Log.d(CLASS_NAME, "onSaveInstanceState");
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void onClick(View v)
+    {
+        Log.d(CLASS_NAME, "onClick v " + v);
+
+        if (v instanceof Button)
+        {
+            Button b = (Button) v;
+
+            if (b.equals(this.level1Button))
+            {
+                this.level1ButtonClick();
+            }
+            else if (b.equals(this.level2Button))
+            {
+                this.level2ButtonClick();
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    private void level1ButtonClick()
+    {
+        Log.d(CLASS_NAME, "level1ButtonClick");
+
+        Intent mainIntent = new Intent(MainActivity0.this, SplashActivity1.class);
+        MainActivity0.this.startActivity(mainIntent);
+        MainActivity0.this.finish();
+    }
+
+    /**
+     *
+     */
+    private void level2ButtonClick()
+    {
+        Log.d(CLASS_NAME, "level2ButtonClick");
+
+        Intent mainIntent = new Intent(MainActivity0.this, SplashActivity2.class);
+        MainActivity0.this.startActivity(mainIntent);
+        MainActivity0.this.finish();
     }
 }
