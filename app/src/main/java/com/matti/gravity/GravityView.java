@@ -408,7 +408,7 @@ private Bitmap wavesBitmap;
                         {
                             Log.d (CLASS_NAME, "onTouchEvent Quit ");
                             this.killThread(false);
-                            ((MainActivity) this.mContext).finishAffinity();
+                            ((MainActivity1) this.mContext).finishAffinity();
                         }
                     }
                 }
