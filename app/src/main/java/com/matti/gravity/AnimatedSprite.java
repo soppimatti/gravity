@@ -35,9 +35,6 @@ public class AnimatedSprite extends MySprite
      */
     public void draw(Canvas canvas)
     {
-        float fact = this.getFact();
-        fact = 1.0f;
-
         // Var på skärmen det hamnar. Man kan förstora och skala
         Rect dst = null;
         dst = new Rect(this.posX, this.posY,
