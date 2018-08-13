@@ -46,7 +46,6 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
     private AnimatedSprite explosionSprite;
     private AnimatedSpriteMainBird mainBirdSprite;
     private Bitmap wavesBitmap;
-    private Bitmap skyBitmap;
     private Paint paint01;
     private Paint paint02;
     private Paint paint03;
@@ -68,7 +67,6 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
     private boolean crashedTop = false;
     private boolean crashedBottom = false;
     private boolean crashedHostile = false;
-    private int spriteSize = -1;
     private long ticks = 0;
     private int[] intColorBits;
     private int intColorIdx2;
@@ -110,14 +108,12 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
 
         this.wavesBitmap = this.bitmaps[1];
 
-        this.skyBitmap = BitmapFactory.decodeResource(this.resources, R.drawable.sky13);
-
         Matrix matrix = new Matrix();
         matrix.preScale(-1.0f, 1.0f);
         this.flippedMain = Bitmap.createBitmap(this.mainBirdBitmaps[0], 0, 0, this.mainBirdBitmaps[0].getWidth(), this.mainBirdBitmaps[0].getHeight(), matrix, true);
         this.flippedMainBonus = Bitmap.createBitmap(this.mainBirdBitmaps[1], 0, 0, this.mainBirdBitmaps[1].getWidth(), this.bitmaps[2].getHeight(), matrix, true);
 
-        this.mainBirdSprite = new AnimatedSpriteMainBird(new int[]{0, 1}, 80, 80, 0, largementFactor, this.screenDensity);
+        this.mainBirdSprite = new AnimatedSpriteMainBird1(new int[]{0, 1}, 80, 80, 0, largementFactor, this.screenDensity);
         this.mainBirdSprite.setBitmap(this.bitmaps[2]);
 //        this.mainBirdSprite.setBitmap(flippedMain);
 
@@ -171,6 +167,8 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
         Log.d(CLASS_NAME, "GravityView SIZE_FACTOR " + this.screenDensity);
 
         this.initIntColorBits();
+
+        this.touchAction = MotionEvent.ACTION_UP;
     }
 
     /**
@@ -194,24 +192,19 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
         this.bitmapsRun[6] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites02_02_240x80);
         this.bitmapsRun[7] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites04_03_720x80);
         this.bitmapsRun[8] = BitmapFactory.decodeResource(this.resources, R.drawable.hearts07);
-//        this.bitmapsRun[8] = BitmapFactory.decodeResource(this.resources, R.drawable.penguin_animation04);
 
         this.bitmapsDebug = new Bitmap[9];
         this.bitmapsDebug[0] = BitmapFactory.decodeResource(this.resources, R.drawable.explosion05_2);
         this.bitmapsDebug[1] = BitmapFactory.decodeResource(this.resources, R.drawable.waves03);
         this.bitmapsDebug[2] = this.mainBirdBitmaps[2];
-//        this.bitmapsDebug[2] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites01_04_2_160x80);
-//        this.bitmapsDebug[2] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites01_04_5_160x80);
 
         this.bitmapsDebug[3] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites03_02_2_240x80);
         this.bitmapsDebug[4] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites03_03_2_240x80);
         this.bitmapsDebug[5] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites04_05_2_720x80);
         this.bitmapsDebug[6] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites02_02_2_240x80);
         this.bitmapsDebug[7] = BitmapFactory.decodeResource(this.resources, R.drawable.bird_sprites04_03_2_720x80);
-//        this.bitmapsDebug[8] = BitmapFactory.decodeResource(this.resources, R.drawable.penguin_animation03);
         this.bitmapsDebug[8] = BitmapFactory.decodeResource(this.resources, R.drawable.hearts07);
 
-//        this.bitmaps = this.bitmapsDebug;
         this.bitmaps = this.bitmapsRun;
     }
 
@@ -309,8 +302,6 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
         this.spriteX = (int) (this.screenWidth / 2.0);
         this.spriteY = (int) (this.screenHeight / 2.0);
 
-        this.spriteSize = this.screenHeight / 5;
-
         this.mainBirdSprite.screenTop = 70;
         this.mainBirdSprite.screenBottom = screenHeight - 130;
 
@@ -338,7 +329,7 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
         GravityView.MAIN_BIRD_MAXX = (int) (posX + (this.screenWidth / 6.0f));
         GravityView.MAIN_BIRD_MINX = (int) (posX - (this.screenWidth / 6.0f));
 
-        Log.d(CLASS_NAME, "surfaceChanged ss " + this.spriteSize);
+        Log.d(CLASS_NAME, "surfaceChanged px " + this.mainBirdSprite.posX + ", py " + this.mainBirdSprite.posY + ", st " + this.mainBirdSprite.screenTop + ", sb " + this.mainBirdSprite.screenBottom);
     }
 
     /*
@@ -360,8 +351,6 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
         Log.d(CLASS_NAME, "surfaceDestroyed");
 
         this.killThread(false);
-
-//        this.sensorManager.unregisterSensors();
     }
 
     /**
@@ -782,7 +771,7 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
                 animSprite.isBonus = ((random == 5.0f) ? true : false);
 
 //                Log.d(CLASS_NAME, "updatePos r2 " + random + ", r22 " +  + random2 + ", ms " + animSprite.moveStep + ", bm " + this.hostileSprites[(int) random].bitmap.toString());
-                Log.d(CLASS_NAME, "updatePos r2 " + random + ", r22 " +  + random2 + ", ms " + animSprite.moveStep + ", isb " + animSprite.isBonus);
+//                Log.d(CLASS_NAME, "updatePos r2 " + random + ", r22 " +  + random2 + ", ms " + animSprite.moveStep + ", isb " + animSprite.isBonus);
             }
         }
 
