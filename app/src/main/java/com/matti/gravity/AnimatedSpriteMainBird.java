@@ -13,8 +13,6 @@ public abstract class AnimatedSpriteMainBird extends MySprite
     protected int[] frameAnimations;
     protected int frameNo = 0;
     protected String CLASS_NAME = "AnimatedSpriteMainBird";
-    public boolean loopAnim = true;
-    public boolean sequenceDone = false;
     public int speed = 0;
     public int MIN_SPEED = -20;
     public int MAX_SPEED = 20;
