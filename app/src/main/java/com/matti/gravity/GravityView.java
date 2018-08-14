@@ -763,12 +763,20 @@ public class GravityView extends SurfaceView implements SurfaceHolder.Callback, 
 
                 this.hostileSprites[(int) random].copy(animSprite);
 
-                float random2 = ((int) (Math.random() * 10) + 5);
-                animSprite.moveStep = (int) random2;
+                int random2 = (int) (2 * random * ((Math.min(this.screenHeight, this.screenWidth) > 720) ? 2 : 1) + 5);
                 animSprite.posX = hostileSpriteX;
                 animSprite.posY = hostileSpriteY;
                 animSprite.isToLeft = (hostileSpriteX > 2);
-                animSprite.isBonus = ((random == 5.0f) ? true : false);
+                if (random == 5.0f)
+                {
+                    animSprite.isBonus = true;
+                    animSprite.moveStep = 5;
+                }
+                else
+                {
+                    animSprite.isBonus = false;
+                    animSprite.moveStep = random2;
+                }
 
 //                Log.d(CLASS_NAME, "updatePos r2 " + random + ", r22 " +  + random2 + ", ms " + animSprite.moveStep + ", bm " + this.hostileSprites[(int) random].bitmap.toString());
 //                Log.d(CLASS_NAME, "updatePos r2 " + random + ", r22 " +  + random2 + ", ms " + animSprite.moveStep + ", isb " + animSprite.isBonus);
